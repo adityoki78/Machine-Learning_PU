@@ -1,14 +1,20 @@
+!pip install -q -U google-generativeai
+import google.generativeai as genai
+from IPython.display import Markdown
+
+from google.colab import userdata
+GOOGLE_API_KEY=userdata.get('GOOGLE_API_KEY')
+genai.configure(api_key=GOOGLE_API_KEY)
+
 import PIL.Image
 sample_file_2 = PIL.Image.open('mobil dengan plat.jpeg')
 sample_file_3 = PIL.Image.open('mobil dengan plat2.jpeg')
-import google.generativeai as genai
 
+import google.generativeai as genai
 # Choose a Gemini model.
 model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest")
 
 # Create a prompt.
 prompt = "Read The plate number of the car with the output example {‘plat_no’: ‘B 1234 ABC’,‘vehicle’: ‘car’,‘vehicle_type’: ‘sedan’,‘color’: ‘red’,‘gate_open’: ‘2024-12-02 18.15.01’,‘gate_closed’: ‘N/A’,}"
-
 response = model.generate_content([sample_file_2, sample_file_3, prompt])
-
 Markdown(response.text)
